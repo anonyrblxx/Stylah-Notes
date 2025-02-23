@@ -1,0 +1,235 @@
+/* CSS Variables for easy theming */
+:root {
+    --background: #1e1e1e;
+    --container-bg: #252526;
+    --side-bg: #2a2a2a;
+    --side-border: #444;
+    --primary: #0e639c;
+    --primary-hover: #1177bb;
+    --accent: #3e3e3e;
+    --text-color: #d4d4d4;
+    --line-number-bg: #2d2d2d;
+    --line-number-color: #858585;
+    --transition-speed: 0.3s;
+  }
+  
+  /* Global Reset and Base Styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+  }
+  
+  /* Container Layout */
+  .container {
+    display: flex;
+    width: 100%;
+    background: var(--container-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Main Content Layout */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  /* Tabs Wrapper */
+  .tabs-wrapper {
+    background: var(--accent);
+    padding: 5px;
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--side-border);
+  }
+  
+  .tabs-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* Chrome-like tab sizing:
+     When one tab exists, it fills the space.
+     As more tabs are added, they shrink (min-width: 60px). */
+  .tabs-container button.tab:not(.plus-tab) {
+    flex: 1 1 auto;
+    min-width: 60px;
+    transition: flex 0.3s ease, background var(--transition-speed);
+  }
+  
+  /* Plus-tab remains fixed-size */
+  .tabs-container button.plus-tab {
+    flex: 0 0 auto;
+    font-size: 20px;
+    padding: 0 10px;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: none;
+  }
+  
+  /* Common Tab Styles */
+  .tabs-container button.tab {
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    margin-right: 5px;
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 60px; /* Ensure minimum width */
+    max-width: 200px; /* Ensure maximum width */
+    overflow: hidden; /* Prevent overflow */
+    border-right: 1px solid var(--side-border); /* Subtle separator */
+  }
+  .tabs-container button.tab:hover {
+    /* Remove size effect; add glow effect */
+    box-shadow: 0 0 8px var(--primary);
+  }
+  .tabs-container button.tab.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 0 10px var(--primary);
+  }
+  
+  /* Container inside each tab to align the title and close button */
+  .tab-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .tabs-container button.tab .title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .tabs-container button.tab span.title {
+    margin-right: 8px;
+  }
+  
+  .tabs-container button.tab input.rename-input {
+    background: var(--accent);
+    border: none;
+    color: var(--text-color);
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: background var(--transition-speed), box-shadow var(--transition-speed);
+    box-shadow: 0 0 0 2px transparent;
+    width: 100%; /* Ensure the input field does not increase tab size */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    max-width: 100%; /* Ensure it does not exceed tab size */
+  }
+  .tabs-container button.tab input.rename-input:focus {
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  
+  /* Delete (close) button: blend in with tabs */
+  .tabs-container button.tab .close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 4px 8px; /* Increase clickable area */
+    border-radius: 4px;
+    transition: color var(--transition-speed);
+    opacity: 0.6; /* Less visible */
+  }
+  .tabs-container button.tab .close-btn:hover {
+    color: var(--primary-hover);
+    opacity: 1; /* More visible on hover */
+  }
+
+  /* Delete Tab Animation */
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  .tab-deleting {
+    animation: slideOut 0.3s ease forwards;
+  }
+  
+  /* New Tab Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .new-tab {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  /* Editor Area */
+  .editor-wrapper {
+    display: flex;
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .line-numbers {
+    background: var(--line-number-bg);
+    color: var(--line-number-color);
+    padding: 10px 5px;
+    text-align: right;
+    user-select: none;
+    font-size: 14px;
+    line-height: 1.5;
+    border-right: 1px solid var(--side-border);
+    overflow: hidden;
+  }
+  
+  .note-content {
+    flex: 1;
+    background: var(--background);
+    color: var(--text-color);
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    overflow: auto;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .tabs-container button.tab {
+      padding: 6px 8px;
+    }
+    
+    .note-content {
+      font-size: 13px;
+    }
+  }
